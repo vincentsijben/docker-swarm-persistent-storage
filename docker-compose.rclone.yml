@@ -1,0 +1,53 @@
+version: '2.4'
+services:
+    
+  filebrowser:
+    image: filebrowser/filebrowser:latest
+    container_name: filebrowser
+    ports:
+      - 4000:4000
+    volumes:
+      - rclone_do_space:/srv/storage
+      # you need to hash password yourself, see:
+      # https://github.com/filebrowser/filebrowser/issues/381#issuecomment-653241530
+      # login with "username" and "password"
+      - ./filebrowser.json:/.filebrowser.json
+    # see this comment, to be able to use different port as port 80 you need to change healthcheck, see:
+    # https://github.com/filebrowser/filebrowser/pull/1409#issuecomment-895283609
+    healthcheck:
+      test: curl -f http://localhost:4000/health || exit 1
+
+  storage:
+    build:
+      context: .
+      args:
+        - NODE_ENV=development
+      dockerfile: ./storage/Dockerfile
+    container_name: storage
+    ports:
+      - 3000:3000
+      - 9229:9229
+    command: ../node_modules/.bin/nodemon --ignore *.json --inspect=0.0.0.0:9229 './bin/app'
+    volumes:      
+      - rclone_do_space:/opt/node_app/app/public/storage
+      - ./storage:/opt/node_app/app
+      - ./storage/package.json:/opt/node_app/package.json
+      - ./storage/package-lock.json:/opt/node_app/package-lock.json
+      - notused:/opt/node_app/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+
+volumes:
+  notused:
+    name: "notused"
+  rclone_do_space:
+    name: "rclone_do_space"
+    driver: rclone
+    driver_opts:
+      # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name
+      remote: "digitaloceanspaces:mochatest"
+      # we need to allow the node user to have permissions:
+      allow_other: 'true'
+      uid: 1000
+      gid: 1000

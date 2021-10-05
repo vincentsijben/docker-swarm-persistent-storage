@@ -1,0 +1,10 @@
+{
+    "port": 4000,
+    "baseURL": "",
+    "address": "",
+    "log": "stdout",
+    "database": "/database.db",
+    "root": "/srv",
+    "username": "username",
+    "password": "$2a$10$H3OCr/ASLXmuO4H//EamJ.RGG1Dzns64fpsiBfcfCJDvEUnx9CDJe"
+  }

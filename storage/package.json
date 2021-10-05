@@ -1,0 +1,27 @@
+{
+  "name": "docker-swarm-persistent-storage",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./bin/app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vincentsijben/docker-swarm-persistent-storage.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vincentsijben/docker-swarm-persistent-storage/issues"
+  },
+  "homepage": "https://github.com/vincentsijben/docker-swarm-persistent-storage#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  }
+}

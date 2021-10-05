@@ -1,0 +1,7 @@
+[digitaloceanspaces]
+type = s3
+provider = DigitalOcean
+access_key_id = key
+secret_access_key = secret
+endpoint = ams3.digitaloceanspaces.com
+acl = private

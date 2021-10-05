@@ -1,0 +1,11 @@
+# Dependency directories
+node_modules/
+
+# Secrets
+secrets/*.txt
+
+# MacOS files
+.DS_Store
+
+# Rclone conf with API key and secret
+rclone.conf
