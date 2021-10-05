@@ -25,7 +25,7 @@ You can rebuild everything using:
 
 If you have a test.txt file in the root of your digital ocean space, you should now see it at
 `http://localhost:3000/storage/test.txt`
-You can check the filebrowser at `http://localhost:4000` using 'username' as the username and 'password' as the password
+You can check the filebrowser at `http://localhost:4000` using `username` as the username and `password` as the password
 
 ### Production environment (docker swarm)
 
@@ -73,7 +73,7 @@ You can rebuild everything using:
 
 If you have a test.txt file in the root of your digital ocean space, you should now see it at
 `http://localhost:3000/storage/test.txt`
-You can check the filebrowser at `http://localhost:4000` using 'username' as the username and 'password' as the password
+You can check the filebrowser at `http://localhost:4000` using `username` as the username and `password` as the password
 
 ### Production environment (docker swarm)
 
