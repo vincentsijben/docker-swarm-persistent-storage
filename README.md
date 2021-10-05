@@ -1,6 +1,11 @@
 # docker-swarm-persistent-storage
-In local dev environment, you need to install the docker plugin manual. In production (docker swarm) you can use the used swarm:exec image to install the docker plugin globally on all nodes.
-First, get an API key in Digital Ocean for the spaces API.
+
+This repo contains 2 working examples of using Digital Ocean Spaces as a persistent storage solution for docker swarm. 
+
+- In local dev environment, you need to install the docker plugin manual. 
+- In production (docker swarm) you can use the used swarm:exec image to install the docker plugin globally on all nodes.
+
+First, get an API key in Digital Ocean for the spaces API!
 
 I prefer the s3fs option, because it uses secrets in production and doesn't require a config file in 2 necessary folders, along with a fuse install on the server.
 
