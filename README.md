@@ -15,7 +15,6 @@ install docker plugin:
 # replace `yourkey`, `yoursecret` and `https://ams3.digitaloceanspaces.com` with your own values in the following docker plugin command:
 
 docker plugin install --alias s3fs mochoa/s3fs-volume-plugin --grant-all-permissions AWSACCESSKEYID=yourkey AWSSECRETACCESSKEY=yoursecret DEFAULT_S3FSOPTS='allow_other,uid=1000,gid=1000,url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart'
-docker plugin install --alias s3fs mochoa/s3fs-volume-plugin --grant-all-permissions AWSACCESSKEYID=Y5HGBHDOOBPWOIFNBUUG AWSSECRETACCESSKEY=dIlUJHH2P7jtcycL7ZoLaDAQ4CaXSbcnz/4AQX+u/dI DEFAULT_S3FSOPTS='allow_other,uid=1000,gid=1000,url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart'
 ```
 In the `docker-compose.s3fs.yml` file, the name option for volume s3fs_do_space needs to be your digital ocean space, for example `name: "testspace"`.
 
