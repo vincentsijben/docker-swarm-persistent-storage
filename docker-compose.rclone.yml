@@ -46,7 +46,7 @@ volumes:
     driver: rclone
     driver_opts:
       # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name
-      remote: "digitaloceanspaces:mochatest"
+      remote: "digitaloceanspaces:testspace"
       # we need to allow the node user to have permissions:
       allow_other: 'true'
       uid: 1000

@@ -42,5 +42,5 @@ volumes:
   notused:
     name: "notused"
   s3fs_do_space:
-    name: "mochatest"
+    name: "testspace"
     driver: s3fs
