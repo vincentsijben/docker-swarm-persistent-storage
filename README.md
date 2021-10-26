@@ -20,23 +20,13 @@ You cannot use the same volume names, so if you want to use 1 Digital Ocean Spac
 
 
 ### Local dev environment
-
-install docker plugin:
-```
-# uid 1000 is the user node which is used in storage/Dockerfile
-# replace `yourkey`, `yoursecret` and `https://ams3.digitaloceanspaces.com` with your own values in the following docker plugin command:
-
-docker plugin install --alias s3fs mochoa/s3fs-volume-plugin --grant-all-permissions AWSACCESSKEYID=yourkey AWSSECRETACCESSKEY=yoursecret DEFAULT_S3FSOPTS='allow_other,uid=1000,gid=1000,url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart'
-```
-In the `docker-compose.s3fs.yml` file, the name option for volume s3fs_do_space needs to be your digital ocean space, for example `name: "testspace"`.
+In the `docker-compose.s3fs.yml` file, the name option for volume persistent_data needs to be your digital ocean space, for example `name: "testspace"`.
 
 You can rebuild everything using:
 ```
 ./rebuild-s3fs.sh
 ```
 
-If you have a test.txt file in the root of your digital ocean space, you should now see it at
-`http://localhost:3000/storage/test.txt`
 You can check the filebrowser at `http://localhost:4000` using `username` as the username and `password` as the password
 
 ### Production environment (docker swarm)
@@ -83,8 +73,6 @@ You can rebuild everything using:
 ./rebuild-rclone.sh
 ```
 
-If you have a test.txt file in the root of your digital ocean space, you should now see it at
-`http://localhost:3000/storage/test.txt`
 You can check the filebrowser at `http://localhost:4000` using `username` as the username and `password` as the password
 
 ### Production environment (docker swarm)
