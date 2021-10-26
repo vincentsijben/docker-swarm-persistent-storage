@@ -1,18 +1,28 @@
 # docker-swarm-persistent-storage
 This repo contains 2 working examples of using Digital Ocean Spaces as a persistent storage solution for docker compose/swarm. 
 
-- In local dev environment, you need to install the docker plugin manually (see ```rebuild-s3fs.sh``` or ```rebuild-rclone.sh```). 
-- In production (docker swarm) you can use the used swarm:exec image to install the docker plugin globally on all nodes.
+- In local dev environment, you need to install the docker plugins manually (see ```rebuild-s3fs.sh``` or ```rebuild-rclone.sh```). 
+- In production (docker swarm) you can use the used swarm:exec image to install the docker plugins globally on all nodes.
 
 ## Setting up the Digital Ocean Space
-1. Create a new space in Digital Ocean and make sure to upload a file through the DO interface. This is *very* important, otherwise you'll get ```chmod``` or ```input/output``` errors. I've filed a bug report to DO support about this.
-2. If you're mounting a subfolder in your DO space, make sure to upload a random file through the DO interface there as well! 
+1. Create a new space in Digital Ocean
+2. If you use s3fs, I currently have no other solution to make it work except for having a random file uploaded through the DO Spaces interface first. This is *very* important, otherwise you'll get ```chmod``` or ```input/output``` errors. 
+  * I've filed a bug report to DO support about this, but they said it had something to do with s3fs. 
+  * When using rclone, you don't have this kind of errors.
+  * If you're mounting a subfolder in your DO space, make sure to upload a random file through the DO interface there as well! 
 3. Get an API key in Digital Ocean for the spaces API.
 
-I prefer the s3fs option, because it uses secrets in production and doesn't require a config file in 2 necessary folders, along with a fuse install on the server.
+### Important
+S3fs is not designed to show you directories and instead shows you it as a file. 
+S3fs doesn’t support directories and doesn’t show if it is not created on s3fs. 
+S3FS uses special 'hidden' zero byte files to represent directories, 
+because S3 doesn't really support directories. 
+If you try a mkdir on your mounted s3fs bucket then use the AWS file browser you 
+should see this in action. If your S3 bucket contains a directory structure that 
+was not created by S3FS then S3FS won't recognise that structure. 
+S3FS only works well with buckets that are only ever manipulated using S3FS.
 
-The (in my usecases) minor downside of using s3fs is when mounting several subfolders in one DO space to several volumes, s3fs does something weird with those subfolders; you can't just navigate through them in some use cases. 
-When I tested this with rclone, I had no problems and could simply navigate through all those subfolders from within a 'higher level volume mount'. 
+While I don't like to have a config file and 2 necessary folders ánd a fuse install on the server, maybe it's better to use rclone for regular file and folder work
 
 Todo:
 - I could not get a mongodb container to work with a s3fs mounted volume. I changed the uid and gid to 999, that helps with WiredTiger permission errors. But the db won't execute the mongo-init.sh. It stalls somewhere...

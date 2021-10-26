@@ -1,6 +1,6 @@
 version: '2.4'
 services:
-    
+
   filebrowser:
     image: filebrowser/filebrowser:latest
     container_name: filebrowser
@@ -37,21 +37,41 @@ volumes:
     driver: rclone
     driver_opts:
       # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name
-      remote: "digitaloceanspaces:bm-db6"
+      remote: "digitaloceanspaces:bm-db9"
   persistent_data_subfolder:
     name: "persistent_data_subfolder"
     driver: rclone
     driver_opts:
       # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name and optionally a subfolder
-      remote: "digitaloceanspaces:bm-db6/subfolder"
-  persistent_data_node:
-    name: "persistent_data_node"
-    driver: rclone
-    driver_opts:
-      # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name and optionally a subfolder
-      remote: "digitaloceanspaces:bm-db6/node"
-      # we need to allow the node user to have permissions:
-      allow_other: 'true'
-      uid: 1000
-      gid: 1000
+      remote: "digitaloceanspaces:bm-db9/subfolder"
+      # you could allow other users eg. for a node application:
+      # allow_other: 'true'
+      # uid: 1000
+      # gid: 1000
+  
+
+# can't get this to work:
+# services:
+#   mongo:
+#     image: mongo
+#     restart: always
+#     environment:
+#       MONGO_INITDB_ROOT_USERNAME: root
+#       MONGO_INITDB_ROOT_PASSWORD: example
+#     volumes:
+#       - persistent_data_mongo:/data/db
+#     healthcheck:
+#       test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+#       interval: 3s
+# volumes:
+#   persistent_data_mongo:
+#     name: "persistent_data_mongo"
+#     driver: rclone
+#     driver_opts:
+#       # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name and optionally a subfolder
+#       remote: "digitaloceanspaces:bm-db9/mongo"
+#       # we need to allow the mongo user to have permissions:
+#       allow_other: 'true'
+#       uid: 999
+#       gid: 999
   

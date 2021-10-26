@@ -1,18 +1,6 @@
 version: '2.4'
 services:
 
-  # mongo:
-  #   image: mongo
-  #   restart: always
-  #   environment:
-  #     MONGO_INITDB_ROOT_USERNAME: root
-  #     MONGO_INITDB_ROOT_PASSWORD: example
-  #   volumes:
-  #     - persistent_data_mongo:/data/db
-  #   healthcheck:
-  #     test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
-  #     interval: 3s
-    
   filebrowser:
     image: filebrowser/filebrowser:latest
     container_name: filebrowser
@@ -43,36 +31,20 @@ services:
     volumes:
       - persistent_data_subfolder:/mnt
 
-  node:
-    image: node
-    container_name: node
-    command: sleep 1d
-    volumes:
-      - persistent_data_node:/mnt
-
 volumes:
-  # mongo_db:
   persistent_data:
     driver: s3fs
     driver_opts:
       s3fsopts: "url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
-    name: "bm-db6"
+    name: "bm-db9"
   persistent_data_subfolder:
     driver: s3fs
     driver_opts:
+      # if you want to use this for a node application:
+      # for correct permissions, node needs uid and gid 1000
+      # you need to create the folder 'node' ánd upload a random file through the Digital Ocean Spaces interface, else you'll get errors.
+      # s3fsopts: "allow_other,uid=1000,gid=1000,url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
       s3fsopts: "url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
     # you need to create the folder 'subfolder' ánd upload a random file through the Digital Ocean Spaces interface, else you'll get errors.
-    name: "bm-db6/subfolder"
-  persistent_data_node:
-    driver: s3fs
-    driver_opts:
-    # for correct permissions, node needs uid and gid 1000
-      s3fsopts: "allow_other,uid=1000,gid=1000,url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
-    name: "bm-db6/node"
-  # persistent_data_mongo:
-  #   driver: s3fs
-  #   driver_opts:
-  #   # for correct permissions, mongo needs uid and gid 999
-  #     s3fsopts: "allow_other,uid=999,gid=999,url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
-  #   # you need to create the folder 'mongo' ánd upload a random file through the Digital Ocean Spaces interface, else you'll get errors.
-  #   name: "bm-db6/mongo"
+    name: "bm-db9/subfolder"
+  
