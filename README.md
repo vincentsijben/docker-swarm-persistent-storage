@@ -7,9 +7,10 @@ This repo contains 2 working examples of using Digital Ocean Spaces as a persist
 ## Setting up the Digital Ocean Space
 1. Create a new space in Digital Ocean
 2. If you use s3fs, I currently have no other solution to make it work except for having a random file uploaded through the DO Spaces interface first. This is *very* important, otherwise you'll get ```chmod``` or ```input/output``` errors. 
+  * If you're mounting a subfolder in your DO space with s3fs, make sure to upload a random file through the DO interface there as well!
   * I've filed a bug report to DO support about this, but they said it had something to do with s3fs. 
   * When using rclone, you don't have this kind of errors.
-  * If you're mounting a subfolder in your DO space, make sure to upload a random file through the DO interface there as well! 
+ 
 3. Get an API key in Digital Ocean for the spaces API.
 
 ### Important
@@ -24,8 +25,8 @@ S3FS only works well with buckets that are only ever manipulated using S3FS.
 
 While I don't like to have a config file and 2 necessary folders ánd a fuse install on the server, maybe it's better to use rclone for regular file and folder work
 
-Todo:
-- I could not get a mongodb container to work with a s3fs mounted volume. I changed the uid and gid to 999, that helps with WiredTiger permission errors. But the db won't execute the mongo-init.sh. It stalls somewhere...
+### Todo
+- I could not get a mongodb container to work with a s3fs mounted volume. I changed the uid and gid to 999, that helps with WiredTiger permission errors. But the db won't start up and keeps restarting...
 
 ## s3fs example
 You cannot use the same volume names, so if you want to use 1 Digital Ocean Space and create multiple volumes with it, you'll have to use subfolders to mount.
