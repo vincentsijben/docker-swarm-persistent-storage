@@ -20,5 +20,5 @@ echo "open filebrowser: http://localhost:4000 and login with 'username' and 'pas
 echo "check alpine container and /mnt folder."
 echo "------------------------------------------------"
 
-# for testing: docker run -ti --rm -v bm-db7:/mnt ubuntu bash
+# for testing: docker run -ti --rm -v [volumename]:/mnt ubuntu bash
 

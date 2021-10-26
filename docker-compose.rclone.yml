@@ -37,13 +37,13 @@ volumes:
     driver: rclone
     driver_opts:
       # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name
-      remote: "digitaloceanspaces:bm-db9"
+      remote: "digitaloceanspaces:testspace"
   persistent_data_subfolder:
     name: "persistent_data_subfolder"
     driver: rclone
     driver_opts:
       # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name and optionally a subfolder
-      remote: "digitaloceanspaces:bm-db9/subfolder"
+      remote: "digitaloceanspaces:testspace/subfolder"
       # you could allow other users eg. for a node application:
       # allow_other: 'true'
       # uid: 1000
@@ -69,7 +69,7 @@ volumes:
 #     driver: rclone
 #     driver_opts:
 #       # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name and optionally a subfolder
-#       remote: "digitaloceanspaces:bm-db9/mongo"
+#       remote: "digitaloceanspaces:testspace/mongo"
 #       # we need to allow the mongo user to have permissions:
 #       allow_other: 'true'
 #       uid: 999

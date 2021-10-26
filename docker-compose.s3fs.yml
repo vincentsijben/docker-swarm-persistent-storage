@@ -36,7 +36,7 @@ volumes:
     driver: s3fs
     driver_opts:
       s3fsopts: "url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
-    name: "bm-db9"
+    name: "testspace"
   persistent_data_subfolder:
     driver: s3fs
     driver_opts:
@@ -46,5 +46,5 @@ volumes:
       # s3fsopts: "allow_other,uid=1000,gid=1000,url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
       s3fsopts: "url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
     # you need to create the folder 'subfolder' ánd upload a random file through the Digital Ocean Spaces interface, else you'll get errors.
-    name: "bm-db9/subfolder"
+    name: "testspace/subfolder"
   
