@@ -7,7 +7,7 @@ services:
     ports:
       - 4000:4000
     volumes:
-      - rclone_do_space:/srv/storage
+      - persistent_data:/srv
       # you need to hash password yourself, see:
       # https://github.com/filebrowser/filebrowser/issues/381#issuecomment-653241530
       # login with "username" and "password"
@@ -17,37 +17,41 @@ services:
     healthcheck:
       test: curl -f http://localhost:4000/health || exit 1
 
-  storage:
-    build:
-      context: .
-      args:
-        - NODE_ENV=development
-      dockerfile: ./storage/Dockerfile
-    container_name: storage
-    ports:
-      - 3000:3000
-      - 9229:9229
-    command: ../node_modules/.bin/nodemon --ignore *.json --inspect=0.0.0.0:9229 './bin/app'
-    volumes:      
-      - rclone_do_space:/opt/node_app/app/public/storage
-      - ./storage:/opt/node_app/app
-      - ./storage/package.json:/opt/node_app/package.json
-      - ./storage/package-lock.json:/opt/node_app/package-lock.json
-      - notused:/opt/node_app/app/node_modules
-    environment:
-      - NODE_ENV=development
-      - PORT=3000
+  example:
+    image: alpine
+    container_name: example
+    command: sleep 1d
+    volumes:
+      - persistent_data:/mnt
+
+  example_subfolder:
+    image: alpine
+    container_name: example_subfolder
+    command: sleep 1d
+    volumes:
+      - persistent_data_subfolder:/mnt
 
 volumes:
-  notused:
-    name: "notused"
-  rclone_do_space:
-    name: "rclone_do_space"
+  persistent_data:
+    name: "persistent_data"
     driver: rclone
     driver_opts:
       # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name
-      remote: "digitaloceanspaces:testspace"
+      remote: "digitaloceanspaces:bm-db6"
+  persistent_data_subfolder:
+    name: "persistent_data_subfolder"
+    driver: rclone
+    driver_opts:
+      # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name and optionally a subfolder
+      remote: "digitaloceanspaces:bm-db6/subfolder"
+  persistent_data_node:
+    name: "persistent_data_node"
+    driver: rclone
+    driver_opts:
+      # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name and optionally a subfolder
+      remote: "digitaloceanspaces:bm-db6/node"
       # we need to allow the node user to have permissions:
       allow_other: 'true'
       uid: 1000
       gid: 1000
+  
