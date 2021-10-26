@@ -2,26 +2,12 @@ version: '2.4'
 services:
 
   # mongo:
-  #   image: mongo:4.0.27-xenial
+  #   image: mongo
   #   restart: always
-  #   container_name: mongo
-  #   ports:
-  #     - 27017:27017
-  #   secrets:
-  #     - mongo_initdb_root_username
-  #     - mongo_initdb_root_password
-  #     - mongo_username
-  #     - mongo_password
   #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME_FILE=/run/secrets/mongo_initdb_root_username
-  #     - MONGO_INITDB_ROOT_PASSWORD_FILE=/run/secrets/mongo_initdb_root_password
-  #     - MONGO_INITDB_DATABASE=admin
-  #     - MONGO_USERNAME_FILE=/run/secrets/mongo_username
-  #     - MONGO_PASSWORD_FILE=/run/secrets/mongo_password
-  #     - MONGO_DATABASE=genart
-  #     - TZ=Europe/Amsterdam
+  #     MONGO_INITDB_ROOT_USERNAME: root
+  #     MONGO_INITDB_ROOT_PASSWORD: example
   #   volumes:
-  #     - ./mongo-init.sh:/docker-entrypoint-initdb.d/mongo-init.sh:ro
   #     - persistent_data_mongo:/data/db
   #   healthcheck:
   #     test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
@@ -64,18 +50,8 @@ services:
     volumes:
       - persistent_data_node:/mnt
 
-# secrets:
-#   mongo_username:
-#     file: ./secrets/mongo_username.txt
-#   mongo_password:
-#     file: ./secrets/mongo_password.txt
-#   mongo_initdb_root_username:
-#     file: ./secrets/mongo_initdb_root_username.txt
-#   mongo_initdb_root_password:
-#     file: ./secrets/mongo_initdb_root_password.txt
-
 volumes:
-  mongo_db:
+  # mongo_db:
   persistent_data:
     driver: s3fs
     driver_opts:
