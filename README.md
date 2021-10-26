@@ -1,7 +1,7 @@
 # docker-swarm-persistent-storage
 This repo contains 2 working examples of using Digital Ocean Spaces as a persistent storage solution for docker compose/swarm. 
 
-- In local dev environment, you need to install the docker plugin manually (see ```rebuild-s3fs.sh```). 
+- In local dev environment, you need to install the docker plugin manually (see ```rebuild-s3fs.sh``` or ```rebuild-rclone.sh```). 
 - In production (docker swarm) you can use the used swarm:exec image to install the docker plugin globally on all nodes.
 
 ## Setting up the Digital Ocean Space
@@ -15,7 +15,7 @@ The (in my usecases) minor downside of using s3fs is when mounting several subfo
 When I tested this with rclone, I had no problems and could simply navigate through all those subfolders from within a 'higher level volume mount'. 
 
 Todo:
-- I could not get a mongodb container to work with a s3fs mounted volume. I changed the uid and gid to 999, that helps with WiredTiger permission errors
+- I could not get a mongodb container to work with a s3fs mounted volume. I changed the uid and gid to 999, that helps with WiredTiger permission errors. But the db won't execute the mongo-init.sh. It stalls somewhere...
 
 ## s3fs example
 You cannot use the same volume names, so if you want to use 1 Digital Ocean Space and create multiple volumes with it, you'll have to use subfolders to mount.
