@@ -4,6 +4,18 @@ This repo contains working examples of using s3fs and rclone docker volume plugi
 - In local dev environment, you need to install the docker plugins manually (see ```rebuild-s3fs.sh``` or ```rebuild-rclone.sh```). 
 - In production (docker swarm) you can use the used swarm:exec image to install the docker plugins globally on all nodes.
 
+### Important
+S3fs is not designed to show you directories and instead shows you it as a file. 
+S3fs doesn’t support directories and doesn’t show if it is not created on s3fs. 
+S3FS uses special 'hidden' zero byte files to represent directories, 
+because S3 doesn't really support directories. 
+If you try a mkdir on your mounted s3fs bucket then use the AWS file browser you 
+should see this in action. If your S3 bucket contains a directory structure that 
+was not created by S3FS then S3FS won't recognise that structure. 
+S3FS only works well with buckets that are only ever manipulated using S3FS.
+
+While I don't like to have a config file and 2 necessary folders ánd a fuse install on the server, maybe it's better to use rclone for regular file and folder work
+
 ## Setting up the Digital Ocean Space
 1. Create a new space in Digital Ocean
 2. If you use s3fs, I currently have no other solution to make it work except for having a random file uploaded through the DO Spaces interface first. This is *very* important, otherwise you'll get ```chmod``` or ```input/output``` errors. 
@@ -18,22 +30,11 @@ This repo contains working examples of using s3fs and rclone docker volume plugi
   * When using rclone, you don't have this kind of errors.
 3. Create an access key and secret (https://cloud.linode.com/object-storage/access-keys)
 
-### Important
-S3fs is not designed to show you directories and instead shows you it as a file. 
-S3fs doesn’t support directories and doesn’t show if it is not created on s3fs. 
-S3FS uses special 'hidden' zero byte files to represent directories, 
-because S3 doesn't really support directories. 
-If you try a mkdir on your mounted s3fs bucket then use the AWS file browser you 
-should see this in action. If your S3 bucket contains a directory structure that 
-was not created by S3FS then S3FS won't recognise that structure. 
-S3FS only works well with buckets that are only ever manipulated using S3FS.
 
-While I don't like to have a config file and 2 necessary folders ánd a fuse install on the server, maybe it's better to use rclone for regular file and folder work
 
-### Todo
-- I could not get a mongodb container to work with a s3fs mounted volume. I changed the uid and gid to 999, that helps with WiredTiger permission errors. But the db won't start up and keeps restarting...
 
-## s3fs example
+
+# s3fs example
 You cannot use the same volume names, so if you want to use 1 Digital Ocean Space and create multiple volumes with it, you'll have to use subfolders to mount.
 
 
@@ -71,7 +72,7 @@ It uses secrets (so you'll have to create them).
         condition: none
 ```
 
-## rclone example
+# rclone example
 
 ### Local dev environment
 
