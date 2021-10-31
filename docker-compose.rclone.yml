@@ -24,54 +24,22 @@ services:
     volumes:
       - persistent_data:/mnt
 
-  example_subfolder:
-    image: alpine
-    container_name: example_subfolder
-    command: sleep 1d
-    volumes:
-      - persistent_data_subfolder:/mnt
-
 volumes:
   persistent_data:
     name: "persistent_data"
     driver: rclone
     driver_opts:
       # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name
-      remote: "digitaloceanspaces:testspace"
-  persistent_data_subfolder:
-    name: "persistent_data_subfolder"
-    driver: rclone
-    driver_opts:
-      # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name and optionally a subfolder
-      remote: "digitaloceanspaces:testspace/subfolder"
-      # you could allow other users eg. for a node application:
-      # allow_other: 'true'
-      # uid: 1000
-      # gid: 1000
+      remote: "digitaloceanspaces:spacename"
+  # persistent_data_subfolder:
+  #   name: "persistent_data_subfolder"
+  #   driver: rclone
+  #   driver_opts:
+  #     # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name and optionally a subfolder
+  #     remote: "digitaloceanspaces:spacename/subfolder"
+  #     # you could allow other users eg. for a node application:
+  #     # allow_other: 'true'
+  #     # uid: 1000
+  #     # gid: 1000
   
 
-# can't get this to work:
-# services:
-#   mongo:
-#     image: mongo
-#     restart: always
-#     environment:
-#       MONGO_INITDB_ROOT_USERNAME: root
-#       MONGO_INITDB_ROOT_PASSWORD: example
-#     volumes:
-#       - persistent_data_mongo:/data/db
-#     healthcheck:
-#       test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
-#       interval: 3s
-# volumes:
-#   persistent_data_mongo:
-#     name: "persistent_data_mongo"
-#     driver: rclone
-#     driver_opts:
-#       # the remote is your rclone.conf name (the part between [ ] on top), followed by your digital ocean space name and optionally a subfolder
-#       remote: "digitaloceanspaces:testspace/mongo"
-#       # we need to allow the mongo user to have permissions:
-#       allow_other: 'true'
-#       uid: 999
-#       gid: 999
-  

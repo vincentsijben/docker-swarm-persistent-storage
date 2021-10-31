@@ -1,4 +1,5 @@
 version: '2.4'
+
 services:
 
   filebrowser:
@@ -24,27 +25,23 @@ services:
     volumes:
       - persistent_data:/mnt
 
-  example_subfolder:
-    image: alpine
-    container_name: example_subfolder
-    command: sleep 1d
-    volumes:
-      - persistent_data_subfolder:/mnt
-
 volumes:
   persistent_data:
     driver: s3fs
     driver_opts:
-      s3fsopts: "url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
-    name: "testspace"
-  persistent_data_subfolder:
-    driver: s3fs
-    driver_opts:
-      # if you want to use this for a node application:
-      # for correct permissions, node needs uid and gid 1000
-      # you need to create the folder 'node' ánd upload a random file through the Digital Ocean Spaces interface, else you'll get errors.
-      # s3fsopts: "allow_other,uid=1000,gid=1000,url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
-      s3fsopts: "url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
-    # you need to create the folder 'subfolder' ánd upload a random file through the Digital Ocean Spaces interface, else you'll get errors.
-    name: "testspace/subfolder"
-  
+    # if you want to use this for a node application:
+    # for correct permissions, node needs uid and gid 1000
+    # maybe you want a subfolder, you should use name: "spacename/subfolder"
+    # then you need to create the folder 'subfolder' ánd upload a random file through the Digital Ocean Spaces interface, else you'll get errors.
+    # s3fsopts: "allow_other,uid=1000,gid=1000,url=https://ams3.digitaloceanspaces.com,use_path_request_style,nomultipart"
+
+    # a mongodb container needs user 999 so you should use:
+    # s3fsopts: "allow_other,uid=999,gid=999,url=https://ams3.digitaloceanspaces.com"
+      s3fsopts: "url=https://ams3.digitaloceanspaces.com"
+    name: "bm-db"
+  # you could use a linode object storage bucket as well:
+  # persistent_data_linode:
+  #   driver: linode
+  #   driver_opts:
+  #     s3fsopts: "url=https://eu-central-1.linodeobjects.com"
+  #   name: "bucketname"

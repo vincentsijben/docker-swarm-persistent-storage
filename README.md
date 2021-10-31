@@ -1,5 +1,5 @@
 # docker-swarm-persistent-storage
-This repo contains 2 working examples of using Digital Ocean Spaces as a persistent storage solution for docker compose/swarm. 
+This repo contains working examples of using s3fs and rclone docker volume plugins with Digital Ocean Spaces (https://www.digitalocean.com/products/spaces/) or Linode Object Storage (https://www.linode.com/products/object-storage/) as a persistent storage solution for docker compose/swarm. 
 
 - In local dev environment, you need to install the docker plugins manually (see ```rebuild-s3fs.sh``` or ```rebuild-rclone.sh```). 
 - In production (docker swarm) you can use the used swarm:exec image to install the docker plugins globally on all nodes.
@@ -8,10 +8,15 @@ This repo contains 2 working examples of using Digital Ocean Spaces as a persist
 1. Create a new space in Digital Ocean
 2. If you use s3fs, I currently have no other solution to make it work except for having a random file uploaded through the DO Spaces interface first. This is *very* important, otherwise you'll get ```chmod``` or ```input/output``` errors. 
   * If you're mounting a subfolder in your DO space with s3fs, make sure to upload a random file through the DO interface there as well!
-  * I've filed a bug report to DO support about this, but they said it had something to do with s3fs. 
   * When using rclone, you don't have this kind of errors.
- 
 3. Get an API key in Digital Ocean for the spaces API.
+
+## Setting up the Linode Object Storage
+1. Create a new object storage in Linode.com
+2. If you use s3fs, I currently have no other solution to make it work except for having a random file uploaded through the linode.com interface first. This is *very* important, otherwise you'll get ```chmod``` or ```input/output``` errors. 
+  * If you're mounting a subfolder in your linode object storage with s3fs, make sure to upload a random file through the DO interface there as well!
+  * When using rclone, you don't have this kind of errors.
+3. Create an access key and secret (https://cloud.linode.com/object-storage/access-keys)
 
 ### Important
 S3fs is not designed to show you directories and instead shows you it as a file. 

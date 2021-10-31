@@ -1,3 +1,4 @@
+docker context use default
 docker-compose -f docker-compose.rclone.yml down # take down all containers
 docker rm -f $(docker ps -a -q) # remove all containers
 docker rmi -f $(docker images -q) # remove all images
