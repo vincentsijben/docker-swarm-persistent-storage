@@ -39,7 +39,7 @@ You cannot use the same volume names, so if you want to use 1 Digital Ocean Spac
 
 
 ### Local dev environment
-In the `docker-compose.s3fs.yml` file, the name option for volume persistent_data needs to be your digital ocean space, for example `name: "testspace"`.
+In the `docker-compose.s3fs.yml` file, the name option for volume persistent_data needs to be your digital ocean space, for example `name: "spacename"`.
 
 You can rebuild everything using:
 ```
@@ -85,7 +85,7 @@ install docker plugin:
 # Run this manually:
 docker plugin install rclone/docker-volume-rclone --alias rclone --grant-all-permissions config=/Users/vincent.sijben/Documents/GitHub/docker-swarm-persistent-storage/rclone/config cache=/Users/vincent.sijben/Documents/GitHub/docker-swarm-persistent-storage/rclone/cache
 ```
-In the `docker-compose.rclone.yml` file, you can now set the remote option `[name of config]:[name of digital ocean space]`, for example `digitaloceanspaces:testspace`.
+In the `docker-compose.rclone.yml` file, you can now set the remote option `[name of config]:[name of digital ocean space]`, for example `digitaloceanspaces:spacename`.
 
 You can rebuild everything using:
 ```
